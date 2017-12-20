@@ -17,15 +17,19 @@ class ViewController: UIViewController {
     @IBOutlet weak var currentWeatherIcon: UIImageView!
     @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    let client = DarkSkyAPIClient()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let currentWeather = CurrentWeather(temperature: 88.0, humidity: 0.8, precipitationProbability: 0.1, summary: "Hot", icon: "clear-day")
-        let currentWeatherViewModel = CurrentWeatherViewModel(model: currentWeather)
-        displayWeather(using: currentWeatherViewModel)
+        
+        let KLCoordinate = Coordinate(latitude: 3.1390, longitude: 101.6869)
+        client.getCurrentWeather(at: KLCoordinate) { currentWeather, error in
+            print(currentWeather)
+            print(error)
+        }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
